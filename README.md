@@ -1,33 +1,101 @@
-# Top-Tier Personal Planning Interface
+# 🗓️ Interactive Wall Calendar Component
 
-This project is a production-grade interactive wall calendar component designed with a strong emphasis on UX, visual hierarchy, and real-world usability. 
+A production-grade, fully responsive React/Next.js wall calendar component with date range selection, tagged notes, and beautiful animations.
 
-> *"Instead of just building a basic calendar, I focused on building a usable planning interface with strong UX patterns like intelligent range presets, contextual tagged notes, hybrid holiday ingestion, and a responsive layout physically inspired by physical wall calendars."*
+![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.0-38B2AC?logo=tailwind-css)
 
-## 🚀 Key Differentiators & Product Highlights
+## 🎬 Demo
 
-Instead of stopping at baseline state-management, this component was heavily pushed towards real **"Product Thinking":**
+- **Live Demo:** [View on Vercel](https://your-deployment-url.vercel.app) *(Update after deployment)*
+- **Video Walkthrough:** [Watch on Loom](https://loom.com/your-video) *(Add your recorded video)*
 
-- **Quick Planning Presets:** Single-click UX buttons for `"Today"`, `"This Week"`, and `"This Month"`, utilizing clean `date-fns` manipulation to jump states instantly.
-- **Contextual Note Tagging:** Notes aren't just strings anymore. Utilizing dynamic state categorization (`Work`, `Personal`, `Urgent`) attached directly to custom Tailwind visual chips for immediate scannability.
-- **Smart Range Analytics:** Calculates and displays the exact duration dynamically (e.g., "7 days selected") guiding users intuitively instead of just rendering raw dates.
-- **Hybrid Holiday API (Senior Architect Strategy):** Features a custom Hook that attempts to dynamically load accurate real-time Indian Government Data (`https://date.nager.at` API). *Crucially*, it falls back silently to a high-quality static hard-coded map if the network drops out over an unreliable connection. This proves reliable UX decision-making patterns.
-- **Extreme UI Polish:** Hover pulses, `framer-motion` scale pop rendering for clicks, multi-tier layout breaking (`md:` to vertical stacking seamlessly), shadow elevation depth, and Dark/Light Mode.
+## ✨ Features
 
-## Tech Stack Overview
+### Core Requirements ✅
+- ✅ **Wall Calendar Aesthetic** - Physical calendar look with spiral binding & hero images
+- ✅ **Day Range Selector** - Click to select start & end dates with visual states
+- ✅ **Integrated Notes** - Tagged notes (Work/Personal/Urgent) with CRUD operations
+- ✅ **Responsive Design** - Desktop grid → Mobile stack layout
+- ✅ **Data Persistence** - localStorage for notes & preferences
 
-- **Next.js (App Router) & React 18**
-- **TypeScript** natively dictating Note configurations
-- **Tailwind CSS v4** powering custom typography hooks securely
-- **date-fns** & **framer-motion** & **lucide-react**
+### Creative Extras 🚀
+- 🎨 **Dynamic Themes** - Each month has unique seasonal imagery & accent colors
+- ⌨️ **Keyboard Shortcuts** - Arrow keys, T for today, D for dark mode, Esc to clear
+- 🌙 **Dark/Light Mode** - Toggle with preference persistence
+- 📊 **Tag Analytics** - Monthly breakdown of notes by category
+- 📋 **Quick Presets** - One-click "Today", "This Week", "This Month" selection
+- 🎉 **Holiday Markers** - Indian holidays via date-holidays library
+- ✏️ **Edit Notes** - Inline editing for saved notes
+- 📤 **Export Notes** - Download notes as JSON file
+- 📅 **Quick Month Navigator** - Jump to any month instantly
+- 🔔 **Toast Notifications** - Feedback for all user actions
+- ♿ **Full Accessibility** - ARIA labels, keyboard navigation
+- 🎭 **Page Flip Animation** - Smooth month transitions
 
-## Quick Start
+## 🛠️ Tech Stack
+
+- **Framework:** Next.js 16 (App Router)
+- **Language:** TypeScript
+- **Styling:** Tailwind CSS v4
+- **Animations:** Framer Motion
+- **Icons:** Lucide React
+- **Date Utils:** date-fns
+- **Holidays:** date-holidays
+
+## 🚀 Quick Start
 
 ```bash
-git clone <your-repo-url>
-cd wall-calendar-planner
+# Clone the repository
+git clone https://github.com/YOUR_USERNAME/wall-calendar.git
+cd wall-calendar
+
+# Install dependencies
 npm install
+
+# Start development server
 npm run dev
 ```
 
-Visit [http://localhost:3000](http://localhost:3000) to view the planning tool.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## ⌨️ Keyboard Shortcuts
+
+| Key | Action |
+|-----|--------|
+| ← / → | Navigate months |
+| T | Jump to today |
+| D | Toggle dark mode |
+| Esc | Clear selection |
+
+## 📁 Project Structure
+
+```
+├── app/
+│   ├── globals.css      # Global styles
+│   ├── layout.tsx       # Root layout with fonts
+│   └── page.tsx         # Home page
+├── components/
+│   └── WallCalendar.tsx # Main calendar component
+├── package.json
+└── README.md
+```
+
+## 🎨 Design Decisions
+
+1. **Single Component Architecture** - Easy evaluation with clean internal separation
+2. **Offline-First Holidays** - date-holidays with graceful static fallback
+3. **localStorage Persistence** - No backend required per assignment guidelines
+4. **Mobile-First Design** - Touch-optimized, then enhanced for desktop
+5. **Accessibility Priority** - Full ARIA support & keyboard navigation
+
+## 📱 Testing Responsive Design
+
+1. Open browser DevTools (F12)
+2. Toggle device toolbar (Ctrl+Shift+M)
+3. Test various screen sizes
+
+---
+
+**Built with ❤️ for the Frontend Engineering Challenge**
