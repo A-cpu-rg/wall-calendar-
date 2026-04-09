@@ -20,17 +20,16 @@ A production-grade, fully responsive React/Next.js wall calendar component with 
 -  **Responsive Design** - Desktop grid → Mobile stack layout
 -  **Data Persistence** - localStorage for notes & preferences
 
-### Creative Extras 🚀
+### Creative Extras 
 -  **Dynamic Themes** - Each month has unique seasonal imagery & accent colors
--  **Keyboard Shortcuts** - Arrow keys, T for today, D for dark mode, Esc to clear
+-  **Keyboard Shortcuts** - Arrow keys, T for today, Esc to clear
 -  **Dark/Light Mode** - Toggle with preference persistence
 -  **Tag Analytics** - Monthly breakdown of notes by category
 -  **Quick Presets** - One-click "Today", "This Week", "This Month" selection
 -  **Holiday Markers** - Indian holidays via date-holidays library
 -  **Edit Notes** - Inline editing for saved notes
--  **Export Notes** - Download notes as JSON file
+-  **Export Notes** - Download notes as .txt file
 -  **Quick Month Navigator** - Jump to any month instantly
--  **Toast Notifications** - Feedback for all user actions
 -  **Full Accessibility** - ARIA labels, keyboard navigation
 -  **Page Flip Animation** - Smooth month transitions
 
