@@ -44,9 +44,6 @@ const STATIC_HOLIDAYS: Record<string, string> = {
   "12-25": "Christmas 🎄",
 };
 
-// ─────────────────────────────────────────────────────────────
-// Types
-// ─────────────────────────────────────────────────────────────
 
 type NoteTag = "Work" | "Personal" | "Urgent";
 
@@ -70,17 +67,12 @@ interface Note {
   tag:   NoteTag;
 }
 
-// ─────────────────────────────────────────────────────────────
-// Helpers
-// ─────────────────────────────────────────────────────────────
+
 
 function uid() {
   return Math.random().toString(36).slice(2);
 }
 
-// ─────────────────────────────────────────────────────────────
-// SpiralBinding
-// ─────────────────────────────────────────────────────────────
 
 function SpiralBinding({ accent }: { accent: string }) {
   return (
@@ -101,9 +93,6 @@ function SpiralBinding({ accent }: { accent: string }) {
   );
 }
 
-// ─────────────────────────────────────────────────────────────
-// HeroPanel — with page-flip slide animation
-// ─────────────────────────────────────────────────────────────
 
 function HeroPanel({
   monthDate, accent, label, direction,
@@ -153,9 +142,6 @@ function HeroPanel({
   );
 }
 
-// ─────────────────────────────────────────────────────────────
-// Toast
-// ─────────────────────────────────────────────────────────────
 
 function Toast({ message, visible }: { message: string; visible: boolean }) {
   return (
@@ -177,9 +163,6 @@ function Toast({ message, visible }: { message: string; visible: boolean }) {
   );
 }
 
-// ─────────────────────────────────────────────────────────────
-// Keyboard shortcut hint panel
-// ─────────────────────────────────────────────────────────────
 
 function ShortcutHints({ dark }: { dark: boolean }) {
   const [open, setOpen] = useState(false);
@@ -242,9 +225,6 @@ function ShortcutHints({ dark }: { dark: boolean }) {
   );
 }
 
-// ─────────────────────────────────────────────────────────────
-// Monthly tag analytics bar
-// ─────────────────────────────────────────────────────────────
 
 function TagAnalytics({ notes, currentMonth, dark }: { notes: Note[]; currentMonth: Date; dark: boolean }) {
   const stats = useMemo(() => {
@@ -282,9 +262,6 @@ function TagAnalytics({ notes, currentMonth, dark }: { notes: Note[]; currentMon
   );
 }
 
-// ─────────────────────────────────────────────────────────────
-// Confirm-to-clear dialog
-// ─────────────────────────────────────────────────────────────
 
 function ConfirmClear({
   open, dark, accent, onConfirm, onCancel,
@@ -344,9 +321,6 @@ function ConfirmClear({
   );
 }
 
-// ─────────────────────────────────────────────────────────────
-// NoteCard — supports inline editing
-// ─────────────────────────────────────────────────────────────
 
 function NoteCard({
   note, dark, accent, onDelete, onSaveEdit,
@@ -421,10 +395,8 @@ function NoteCard({
         </div>
       </div>
 
-      {/* Body: view or edit mode */}
       {editing ? (
         <div className="flex flex-col gap-2">
-          {/* Inline tag selector */}
           <div className="flex gap-2 flex-wrap">
             {(["Work", "Personal", "Urgent"] as NoteTag[]).map((t) => (
               <button
@@ -484,9 +456,6 @@ function NoteCard({
   );
 }
 
-// ─────────────────────────────────────────────────────────────
-// Main Component
-// ─────────────────────────────────────────────────────────────
 
 export default function WallCalendar() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -504,7 +473,6 @@ export default function WallCalendar() {
 
   const { accent, label } = MONTH_THEMES[currentMonth.getMonth()];
 
-  // ── Persistence ──────────────────────────────────────────
   useEffect(() => {
     try {
       const raw = sessionStorage.getItem("wc-notes-v2");
@@ -516,7 +484,6 @@ export default function WallCalendar() {
     sessionStorage.setItem("wc-notes-v2", JSON.stringify(notes));
   }, [notes]);
 
-  // ── Holiday fetch ────────────────────────────────────────
   useEffect(() => {
     fetch(`https://date.nager.at/api/v3/PublicHolidays/${currentMonth.getFullYear()}/IN`)
       .then((r) => { if (!r.ok) throw new Error(); return r.json(); })
@@ -536,7 +503,6 @@ export default function WallCalendar() {
     [apiHolidays]
   );
 
-  // ── Calendar grid ────────────────────────────────────────
   const days = useMemo(() => {
     return eachDayOfInterval({
       start: startOfWeek(startOfMonth(currentMonth), { weekStartsOn: 1 }),
@@ -549,7 +515,6 @@ export default function WallCalendar() {
     return rangeEnd;
   }, [rangeStart, rangeEnd, hoverDate]);
 
-  // ── Navigation ───────────────────────────────────────────
   const handlePrevMonth = useCallback(() => {
     setDirection(-1);
     setCurrentMonth((p) => subMonths(p, 1));
@@ -560,7 +525,6 @@ export default function WallCalendar() {
     setCurrentMonth((p) => addMonths(p, 1));
   }, []);
 
-  // ── Day click ────────────────────────────────────────────
   const handleDayClick = useCallback((date: Date) => {
     if (!isSameMonth(date, currentMonth)) return;
     if (!rangeStart || (rangeStart && rangeEnd)) {
@@ -573,7 +537,6 @@ export default function WallCalendar() {
     }
   }, [rangeStart, rangeEnd, currentMonth]);
 
-  // ── Presets ──────────────────────────────────────────────
   const applyPreset = useCallback((preset: "today" | "week" | "month") => {
     const t = new Date();
     setCurrentMonth(t);
