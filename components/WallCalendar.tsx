@@ -545,7 +545,6 @@ export default function WallCalendar() {
     if (preset === "month") { setRangeStart(startOfMonth(t)); setRangeEnd(endOfMonth(t)); }
   }, []);
 
-  // ── Keyboard shortcuts ────────────────────────────────────
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLTextAreaElement || e.target instanceof HTMLInputElement) return;
@@ -558,13 +557,11 @@ export default function WallCalendar() {
     return () => window.removeEventListener("keydown", onKey);
   }, [handleNextMonth, handlePrevMonth, applyPreset]);
 
-  // ── Toast helper ─────────────────────────────────────────
   function showToast(message: string) {
     setToast({ visible: true, message });
     setTimeout(() => setToast({ visible: false, message: "" }), 2400);
   }
 
-  // ── Note CRUD ────────────────────────────────────────────
   function saveNote() {
     const trimmed = noteText.trim();
     if (!trimmed || !rangeStart) return;
@@ -596,14 +593,12 @@ export default function WallCalendar() {
     showToast("All notes cleared");
   }
 
-  // ── Copy agenda ──────────────────────────────────────────
   function copyAgenda() {
     if (!notes.length) return;
     const lines = notes.map((n) => `[${n.tag}] ${n.start}${n.end !== n.start ? ` → ${n.end}` : ""}: ${n.text}`);
     navigator.clipboard.writeText(`📅 Agenda:\n${lines.join("\n")}`).then(() => showToast("Agenda copied!"));
   }
 
-  // ── Export .txt ──────────────────────────────────────────
   function exportNotes() {
     if (!notes.length) return;
     const lines = [
@@ -622,7 +617,6 @@ export default function WallCalendar() {
     showToast("Notes exported!");
   }
 
-  // ── Derived values ───────────────────────────────────────
   const spanDays = rangeStart && rangeEnd
     ? Math.abs(differenceInDays(rangeEnd, rangeStart)) + 1
     : rangeStart ? 1 : 0;
@@ -633,12 +627,10 @@ export default function WallCalendar() {
   const border  = dark ? "border-zinc-800" : "border-[#e0dbd1]";
   const muted   = dark ? "text-zinc-500"   : "text-zinc-400";
 
-  // ─────────────────────────────────────────────────────────
   return (
     <div className={`min-h-screen flex flex-col items-center justify-center p-3 sm:p-6 md:p-12 transition-colors duration-500 ${bg}`}>
       <div className="w-full max-w-[1040px]">
 
-        {/* Toolbar */}
         <div className="flex justify-between items-center mb-4 md:mb-6">
           <ShortcutHints dark={dark} />
           <button
@@ -654,7 +646,6 @@ export default function WallCalendar() {
           </button>
         </div>
 
-        {/* Main card */}
         <motion.div
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0,  opacity: 1 }}
@@ -665,15 +656,12 @@ export default function WallCalendar() {
 
           <div className="flex flex-col md:grid md:grid-cols-5">
 
-            {/* LEFT — Hero image with page-flip */}
             <div className="md:col-span-2">
               <HeroPanel monthDate={currentMonth} accent={accent} label={label} direction={direction} />
             </div>
 
-            {/* RIGHT — Calendar + Notes */}
             <div className={`p-4 sm:p-6 md:p-10 flex flex-col gap-6 md:gap-8 md:col-span-3 border-t md:border-t-0 md:border-l ${border}`}>
 
-              {/* Quick presets */}
               <div className="flex flex-wrap items-center gap-2 md:gap-3">
                 <span className={`text-[10px] font-bold uppercase tracking-widest hidden sm:inline-block ${muted}`}>Presets</span>
                 {([
@@ -693,7 +681,6 @@ export default function WallCalendar() {
                 ))}
               </div>
 
-              {/* Month navigation */}
               <div className="flex items-center justify-between" role="region" aria-label="Month navigation">
                 <button
                   onClick={handlePrevMonth}
@@ -720,7 +707,6 @@ export default function WallCalendar() {
                 </button>
               </div>
 
-              {/* Weekday headers */}
               <div className="grid grid-cols-7 gap-1 md:gap-1.5" role="row">
                 {DAYS_OF_WEEK.map((day) => (
                   <div
@@ -736,7 +722,6 @@ export default function WallCalendar() {
                 ))}
               </div>
 
-              {/* Day cells */}
               <div className="grid grid-cols-7 gap-1 md:gap-1.5" role="grid" aria-label="Calendar days">
                 {days.map((day) => {
                   const inCurrent = isSameMonth(day, currentMonth);
@@ -789,10 +774,8 @@ export default function WallCalendar() {
 
               <hr className={`border-0 border-t ${border}`} />
 
-              {/* ── Notes section ─────────────────────────── */}
               <section aria-label="Agenda notes" className="flex flex-col gap-4">
 
-                {/* Header: title + action buttons */}
                 <div className="flex items-center justify-between flex-wrap gap-2">
                   <h3
                     className="text-[11px] md:text-[12px] font-bold tracking-[2px] md:tracking-[4px] uppercase flex items-center gap-2"
@@ -802,7 +785,6 @@ export default function WallCalendar() {
                   </h3>
 
                   <div className="flex items-center gap-2 flex-wrap">
-                    {/* Day span counter */}
                     {spanDays > 0 && (
                       <span className={`text-[10px] font-mono font-medium px-2 py-0.5 rounded-md ${dark ? "bg-zinc-800 text-zinc-300" : "bg-zinc-100 text-zinc-600"}`}>
                         {spanDays} day{spanDays !== 1 && "s"}
@@ -845,10 +827,8 @@ export default function WallCalendar() {
                   </div>
                 </div>
 
-                {/* Monthly tag analytics */}
                 <TagAnalytics notes={notes} currentMonth={currentMonth} dark={dark} />
 
-                {/* Active range label */}
                 <p className="text-xs md:text-[13px] font-mono leading-relaxed truncate" style={{ color: dark ? "#888" : "#666" }}>
                   {!rangeStart
                     ? "No dates selected."
@@ -857,7 +837,6 @@ export default function WallCalendar() {
                     : `${format(rangeStart, "MMM d")}  —  ${format(rangeEnd, "MMM d, yyyy")}`}
                 </p>
 
-                {/* New note input */}
                 <textarea
                   value={noteText}
                   onChange={(e) => setNoteText(e.target.value)}
@@ -873,7 +852,6 @@ export default function WallCalendar() {
                   style={{ outlineColor: accent }}
                 />
 
-                {/* Tag picker + Save button */}
                 <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-3 transition-opacity ${!rangeStart ? "opacity-40 pointer-events-none" : ""}`}>
                   <div className="flex gap-2 flex-wrap" role="group" aria-label="Note category">
                     {(["Work", "Personal", "Urgent"] as NoteTag[]).map((tag) => (
@@ -905,7 +883,6 @@ export default function WallCalendar() {
                   </button>
                 </div>
 
-                {/* Saved notes */}
                 <AnimatePresence mode="popLayout">
                   {notes.map((note) => (
                     <NoteCard
@@ -925,7 +902,7 @@ export default function WallCalendar() {
         </motion.div>
 
         <p className="text-center mt-6 md:mt-8 text-[10px] md:text-[11px] font-medium tracking-wide text-zinc-500 uppercase">
-          Production Grade Planning Tool · Client-Side Operation
+          Production Grade Planning Tool
         </p>
       </div>
 
