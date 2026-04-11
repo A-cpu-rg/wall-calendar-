@@ -1,0 +1,25 @@
+name: Auto Update README
+
+on:
+  schedule:
+    - cron: '0 18 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Update timestamp
+        run: |
+          sed -i "s/^Last Updated:.*/Last Updated: $(date)/" README.md || echo "Last Updated: $(date)" >> README.md
+
+      - name: Commit changes
+        run: |
+          git config --global user.name "auto-bot"
+          git config --global user.email "bot@github.com"
+          git add README.md
+          git commit -m "chore: update README timestamp" || echo "No changes"
+          git push
